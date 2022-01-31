@@ -12,8 +12,6 @@
 import os
 
 contenido = os.listdir('C:/Users/Abraham/Downloads')
-print(dir(contenido))
-
 
 for cosa in contenido:
     if os.path.isfile(f'C:/Users/Abraham/Downloads/{cosa}'):
