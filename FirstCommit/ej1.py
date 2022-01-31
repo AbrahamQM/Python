@@ -8,12 +8,11 @@
 # en la librería os (Sistema Operativo) de Python.
 # - Recorre todos los resultados obtenidos por la función anterior. Lo puedes hacer, por ejemplo, con un bucle for.
 # - Imprime por pantalla solo aquellos resultados que sean ficheros (para ello también necesitas una función existente en os. \
-
 import os
 
 contenido = os.listdir('C:/Users/Abraham/Downloads')
 
 for cosa in contenido:
     if os.path.isfile(f'C:/Users/Abraham/Downloads/{cosa}'):
-        print(cosa)
+        print(cosa, os.path.getsize(f'C:/Users/Abraham/Downloads/{cosa}'), 'bytes')
 
