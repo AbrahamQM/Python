@@ -138,6 +138,7 @@ def main():
 
     if len(reg_secuencias) == combinaciones:
         print(combinaciones)
+        return combinaciones 
 
     else:
         print("Error de numero de combinaciones")
