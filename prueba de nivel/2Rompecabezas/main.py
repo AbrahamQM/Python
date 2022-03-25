@@ -18,14 +18,8 @@ import ultimaFila as u
 #    [13, 14, 15, 12]
 #])
 
-input_entrada = np.array([   #  todo Se lia con el numero 4 al cambiar el 5 no lo hace bien
-   [1, 2, 3],
-   [5, 4, 6],
-   [7, 0, 8]
-])
 
-
-# todo input entrada de ejemplo en la prueba
+# input entrada de ejemplo en la prueba
 #input_entrada = np.array([
 #   [1, 2, 3, 4],
 #   [5, 0, 6, 8],
@@ -431,12 +425,12 @@ def main():
         print(len(entrada), entrada, longitud)
         salida = str(entrada)
         print("Antes:" , type(input_entrada[0][0]))
-        globals()['input_entrada'] = np.empty(((longitud),(longitud)) ,int ) #( dtype=int, (int(longitud+1), int(longitud+1)))   # Creo el array bidimencional sin inicializarprint(type(input_entrada[0][0]))
+        globals()['input_entrada'] = np.empty(((longitud),(longitud)) ,int ) # Creo el array bidimencional sin inicializar
         x, y = 0, 0
         print("-------->salida:", salida)
         for caracter in salida:
             print("Ahora caracter es:", caracter, "isnumeric():", caracter.isnumeric())
-            if caracter.isnumeric(): # todo algo falla aquí no coge el 0 ni el 5 como numerico
+            if caracter.isnumeric():
                 if x < longitud:
                     if y < longitud:
                         print(caracter,"posicion:",  x, y, "longitud", longitud)
