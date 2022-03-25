@@ -1,6 +1,7 @@
 # Rompecabezas deslizante
 
-# Admite paso por parámetro del array o usar uno con el nombre input_entrada
+# Admite paso por parámetro del array o usar uno con el nombre input_entrada como los 
+# que he puesto a partir de la línea 13
 # Soy consciente de que necesita refactorización ya que habrá bastante código redundante,
 # pero lo entrego hasta el punto al que llegué. Funciona
 import math
