@@ -1,32 +1,36 @@
 # Rompecabezas deslizante
 
-# Admite paso por parámetro del array o usar uno con el nombre input_entrada como los 
+# Admite paso por parámetro del array o usar uno con el nombre input_entrada como los
 # que he puesto a partir de la línea 13
 # Soy consciente de que necesita refactorización ya que habrá bastante código redundante,
-# pero lo entrego hasta el punto al que llegué. Funciona
+# pero lo entrego hasta el punto al que llegué.
 import math
-
 import numpy as np
 import sys
 import ultimaFila as u
 
-#  Otras pruebas mas complicadas no tiene solucion todo el código falla, revisar
-#input_entrada = np.array([
-#    [7, 1, 3, 4],
-#    [5, 2, 6, 8],
-#    [9, 10, 0, 11],
-#    [13, 14, 15, 12]
-#])
-
-
 # input entrada de ejemplo en la prueba
-#input_entrada = np.array([
-#   [1, 2, 3, 4],
-#   [5, 0, 6, 8],
-#   [9, 10, 7, 11],
-#   [13, 14, 15, 12]
-#])
-#
+input_entrada = np.array([
+  [1, 2, 3, 4],
+  [5, 0, 6, 8],
+  [9, 10, 7, 11],
+  [13, 14, 15, 12]
+])
+
+#  Otras pruebas mas complicadas no tiene solucion
+# input_entrada = np.array([
+#     [7, 1, 3, 4],
+#     [5, 2, 6, 8],
+#     [9, 10, 0, 11],
+#     [13, 14, 15, 12]
+# ])
+
+# input_entrada = np.array([  # sin solucion
+#     [1, 2, 3],
+#     [5, 4, 6],
+#     [7, 0, 8]
+# ])
+
 # input_entrada = np.array([  # Sin solucion
 #     [0, 3, 4],
 #     [1, 2, 5],
@@ -86,14 +90,15 @@ def comprobar_posicion(x, y, num):
     else:
         return False
 
+
 def mover_cercano(num):
+    if num == 9:
+        pass
     pos_cero = buscar(input_entrada, 0)
     pos_num = buscar(input_entrada, num)
-    if abs(pos_num[0] - pos_cero[0]) < abs(pos_num[1] - pos_cero[1]):  # Si se encuentra más cerca del eje x
-
-        if pos_num[1] - pos_cero[1] > 0:  # si num está a su derecha del 0
+    if abs(pos_num[0] - pos_cero[0]) < abs(pos_num[1] - pos_cero[1]):  # Si se encuentra más cerca el eje x
+        if pos_num[1] - pos_cero[1] > 0:  # si num está a la derecha del 0
             intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
-
         elif pos_num[1] - pos_cero[1] < 0:  # si num está a la izquierda del 0
             intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
 
@@ -101,8 +106,9 @@ def mover_cercano(num):
         if (pos_num[0] - pos_cero[0]) < 0:  # si num está encima del 0
             intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])
         elif (pos_num[0] - pos_cero[0]) > 0:  # si num está debajo del 0
-           intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])
-        
+            intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])
+
+
 def resuelto():  # Comprueba que el puzzle está resuelto (True) o no (False)
     esperado = res(input_entrada)
     for x in range(len(input_entrada)):
@@ -110,6 +116,7 @@ def resuelto():  # Comprueba que el puzzle está resuelto (True) o no (False)
             if input_entrada[x][y] != esperado[x][y]:
                 return False
     return True
+
 
 def girar3_reloj(num):  # Método que hace girar en sentido de las agujas de reloj 3 posiciones
     pos_cero = buscar(input_entrada, 0)
@@ -151,7 +158,7 @@ def cambiar_esquina():
         pos_cero = buscar(input_entrada, 0)
     intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])  # Subo
     pos_cero = buscar(input_entrada, 0)
-    while pos_cero[1] < len(input_entrada[0]) - 1: # Muevo 0 a derecha
+    while pos_cero[1] < len(input_entrada[0]) - 1:  # Muevo 0 a derecha
         intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
         pos_cero = buscar(input_entrada, 0)
     intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])
@@ -162,7 +169,6 @@ def cambiar_esquina():
         intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
         pos_cero = buscar(input_entrada, 0)
     intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])
-
 
 
 def mover():
@@ -198,7 +204,7 @@ def mover():
                 continue
 
             # Si num está en la misma fila que el 0 pero no es colindante y pos_esperada no está en la última fila
-            elif pos_cero[0] == pos_num[0] and pos_cero[1] != pos_num[1]-1 and pos_cero[1] != pos_num[1]+1 \
+            elif pos_cero[0] == pos_num[0] and pos_cero[1] != pos_num[1] - 1 and pos_cero[1] != pos_num[1] + 1 \
                     and pos_esperada[0] < len(input_entrada[1]) - 1:
                 mover_cercano(num)
                 continue
@@ -213,26 +219,27 @@ def mover():
                     continue
 
                 # Si num está JUSTO a la derecha del 0 y pos_esperada está a la izquierda
-                elif pos_num == (pos_cero[0], pos_cero[1]+1) and pos_esperada[1] < pos_num[1]:
+                elif pos_num == (pos_cero[0], pos_cero[1] + 1) and pos_esperada[1] < pos_num[1]:
                     intercambiar(num)
 
                 # Si num está JUSTO a la izquierda del 0 y pos_esperada está a la izquierda de num y no es última fila
-                elif pos_num == (pos_cero[0], pos_cero[1]-1) and pos_esperada[1] < pos_num[1] \
-                    and pos_num[0] < len(input_entrada[1])-1:
+                elif pos_num == (pos_cero[0], pos_cero[1] - 1) and pos_esperada[1] < pos_num[1] \
+                        and pos_num[0] < len(input_entrada[1]) - 1:
                     rodearXdebajo_a_izquierda()
                     continue
 
-                elif pos_esperada[0] == len(input_entrada[1]) - 1 and ultima != None:  # si pos_esperada está en la última fila
+                elif pos_esperada[0] == len(
+                        input_entrada[1]) - 1 and ultima != None:  # si pos_esperada está en la última fila
                     if len(input_entrada[0]) > 3:
                         ultima = u.ultima_fila(num)
 
                     else:
                         return None
-    
+
                 # Si el número está JUSTO encima del 0 y no es la primera columna
-                elif pos_num == (pos_cero[0]-1, pos_cero[1]) and pos_num[1] != 0:  # Lo rodeo hasta su izda
-                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1]-1])
-                    intercambiar(input_entrada[pos_cero[0]-1][pos_cero[1]-1])
+                elif pos_num == (pos_cero[0] - 1, pos_cero[1]) and pos_num[1] != 0:  # Lo rodeo hasta su izda
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
+                    intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1] - 1])
 
             else:  # Si num no es colindante a 0, ni están en la misma fila
                 mover_cercano(num)
@@ -250,17 +257,17 @@ def mover():
 
                 # El 0 está justo a la izda de num y la columna esperada a la derecha de num y no es última fila
                 if pos_cero == (pos_num[0], pos_num[1] - 1) and pos_esperada[1] > pos_num[1] \
-                        and pos_num[0] != len(input_entrada[1])-1:
+                        and pos_num[0] != len(input_entrada[1]) - 1:
                     rodearXdebajo_a_derecha()
                     continue
 
                 # Si no está en la última fila
-                elif pos_num[0] != len(input_entrada[1])-1:
+                elif pos_num[0] != len(input_entrada[1]) - 1:
                     intercambiar(num)
                     continue
-                
+
                 # Si num está en la última fila pero pos_esperada no
-                elif pos_esperada[0] != len(input_entrada[1])-1:
+                elif pos_esperada[0] != len(input_entrada[1]) - 1:
                     intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])
                     intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1] + 1])
                     intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
@@ -278,7 +285,7 @@ def mover():
                 intercambiar(num)
                 continue
 
-            # Pero Si es colindante al 0, num esta en la columna esperada, la columna no es la última y el 0 no
+            # Pero Si es colindante al 0, num está en la columna esperada, la columna no es la última y el 0 no
             # está encima del num y no está en última fila
             elif ((pos_cero == (pos_num[0], pos_num[1] + 1) or pos_cero == (pos_num[0] + 1, pos_num[1])
                    or pos_cero == (pos_num[0] - 1, pos_num[1]) or pos_cero == (pos_num[0], pos_num[1] - 1))) \
@@ -300,7 +307,7 @@ def mover():
                 # Si num no está en esquina inferior derecha ni JUSTO debajo de pos_esperada y cero justo a la izda de num
                 if pos_num != (len(input_entrada[0]) - 1, len(input_entrada[1]) - 1) \
                         and pos_num != (pos_esperada[0] + 1, pos_esperada[1]) and pos_cero == (
-                pos_num[0], pos_num[1] - 1):
+                        pos_num[0], pos_num[1] - 1):
                     intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])
                     intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1] + 1])
                     intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
@@ -334,7 +341,8 @@ def mover():
                 intercambiar(input_entrada[len(input_entrada[0]) - 1][1])
                 continue
 
-            #  Si el numero está a la derecha de pos_esperada y no está en ultima fila ni en la primera columna
+
+            #  Si el numero está a la derecha de pos_esperada y no está en última fila ni en la primera columna
             #  y además el cero está justo a la derecha de num
             elif pos_num[1] > pos_esperada[1] and pos_num[0] != (len(input_entrada[1]) - 1) \
                     and pos_num[1] != 0 and pos_cero == (pos_num[0], pos_num[1] + 1):
@@ -355,15 +363,36 @@ def mover():
                 if pos_esperada[1] > pos_num[1] and pos_cero[1] > pos_num[1]:
                     intercambiar(num)
                     continue
-                
+
                 # Si num a la izda de pos_esperada y 0 a la izda (lo subo una fila)
                 elif pos_esperada[1] > pos_num[1]:
-                    intercambiar(input_entrada[pos_cero[0]-1][pos_cero[1]])
-                    intercambiar(input_entrada[pos_cero[0]-1][pos_cero[1]+1])
-                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1]+1])
+                    intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])
+                    intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1] + 1])
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
                     continue
 
-                # si num está bajo su posición: roto la fila para colocar num en su sitio y vuelvo a colocar la fila
+                elif pos_num[1] == pos_esperada[1] and len(input_entrada[0]) == 3:  # todo aqui nuevo
+                    while pos_cero[1] > 0:  # muevo 0 a primera columna
+                        intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
+                        pos_cero = buscar(input_entrada, 0)
+                    intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1]])  # Subo
+                    pos_cero = buscar(input_entrada, 0)
+                    while pos_cero[1] < pos_num[1]:  # Muevo 0 a derecha hasta pos_num[1]
+                        intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])
+                        pos_cero = buscar(input_entrada, 0)
+                    pos_cero = buscar(input_entrada, 0)
+                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])  # Bajo ahora num está en su sitio
+                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1] + 1])  # muevo 0 hasta la derecha
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1] + 1])  # subo 0
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1]])  # muevo 0 a izda
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])  # muevo 0 a izda
+                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1] - 1])  # bajo 0 y coloco el numero anterior
+                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])  # lo coloco bajo la posicion de num
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1]])  #
+                    continue
+
+                # si num está bajo su posición y no es un array de 3x3
+                # roto la fila para colocar num en su sitio y vuelvo a colocar la fila
                 elif pos_num[1] == pos_esperada[1]:
                     while pos_cero[1] > 0:  # muevo 0 a primera columna
                         intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
@@ -375,8 +404,8 @@ def mover():
                         pos_cero = buscar(input_entrada, 0)
                     pos_cero = buscar(input_entrada, 0)
                     intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]])  # Bajo ahora num está en su sitio
-                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1]-1])  # Quito los que no van
-                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1]-1])
+                    intercambiar(input_entrada[pos_cero[0] + 1][pos_cero[1] - 1])  # Quito los que no van
+                    intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
                     pos_cero = buscar(input_entrada, 0)
                     while pos_cero[1] > 0:  # muevo 0 a primera columna
                         intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
@@ -387,7 +416,7 @@ def mover():
             elif pos_num == (pos_cero[0] - 1, pos_cero[1]) and pos_esperada[0] < pos_num[0] \
                     and pos_cero[1] == len(input_entrada[0]) - 1:
                 intercambiar(input_entrada[pos_cero[0]][pos_cero[1] - 1])
-                intercambiar(input_entrada[pos_cero[0]-1][pos_cero[1] - 1])
+                intercambiar(input_entrada[pos_cero[0] - 1][pos_cero[1] - 1])
                 continue
 
             # Si el número está justo encima del 0 y pos_esperada está más arriba del número y 0 no está en última columna
@@ -410,7 +439,7 @@ def mover():
         # num en su posición
         else:
             num += 1
-            print(f'****************Ahora num es: {num} *********************')
+            # print(f'****************Ahora num es: {num} *********************')
 
     print("\n!!! FELICIDADES, EL ROMPECABEZAS ESTÁ RESUELTO !!!")
     return 'OK'
@@ -424,8 +453,9 @@ def main():
         longitud = int(math.sqrt(len(entrada)))
         print(len(entrada), entrada, longitud)
         salida = str(entrada)
-        print("Antes:" , type(input_entrada[0][0]))
-        globals()['input_entrada'] = np.empty(((longitud),(longitud)) ,int ) # Creo el array bidimencional sin inicializar
+        print("Antes:", type(input_entrada[0][0]))
+        globals()['input_entrada'] = np.empty(((longitud), (longitud)),
+                                              int)  # Creo el array bidimensional sin inicializar
         x, y = 0, 0
         print("-------->salida:", salida)
         for caracter in salida:
@@ -433,19 +463,18 @@ def main():
             if caracter.isnumeric():
                 if x < longitud:
                     if y < longitud:
-                        print(caracter,"posicion:",  x, y, "longitud", longitud)
+                        print(caracter, "posicion:", x, y, "longitud", longitud)
                         globals()['input_entrada'][x][y] = int(caracter)
                         y += 1
                     else:
                         y = 0
                         x += 1
-                        print("ELSE   ----:", caracter,"posicion:",  x, y, "longitud", longitud)
+                        print("ELSE   ----:", caracter, "posicion:", x, y, "longitud", longitud)
                         globals()['input_entrada'][x][y] = int(caracter)
                         y += 1
 
-        print(type(input_entrada[0][0]))        
+        print(type(input_entrada[0][0]))
         print(input_entrada)
-        input()
     print("El array de entrada es:\n", input_entrada)
     posible = mover()
     if posible is None:
@@ -455,3 +484,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    
