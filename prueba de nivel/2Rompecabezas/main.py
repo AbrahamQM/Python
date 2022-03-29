@@ -10,12 +10,12 @@ import sys
 import ultimaFila as u
 
 # input entrada de ejemplo en la prueba
-# input_entrada = np.array([
-#   [1, 2, 3, 4],
-#   [5, 0, 6, 8],
-#   [9, 10, 7, 11],
-#   [13, 14, 15, 12]
-# ])
+input_entrada = np.array([
+  [1, 2, 3, 4],
+  [5, 0, 6, 8],
+  [9, 10, 7, 11],
+  [13, 14, 15, 12]
+])
 
 # input_entrada = np.array([ # Con solución
 #   [11, 10, 3, 7],
