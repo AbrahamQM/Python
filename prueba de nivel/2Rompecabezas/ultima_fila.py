@@ -3,7 +3,6 @@ import ultimaFila2 as u
 
 
 def ultima_fila(entrada, num):
-    input("ultima_fila() 1º")
     input_entrada = entrada
     res_esperado = me.res(input_entrada)
     sig = num + 1
@@ -25,24 +24,20 @@ def ultima_fila(entrada, num):
             pos_sig = me.buscar(input_entrada, sig)
 
         pos_cero = me.buscar(input_entrada, 0)
-        input("SAlimos del 1º while")
         while pos_cero[1] != pos_num[1]:  # Hasta que el 0 esté bajo num
             me.intercambiar(input_entrada, input_entrada[pos_cero[0]][pos_cero[1] - 1])
             pos_num = me.buscar(input_entrada, num)
             pos_cero = me.buscar(input_entrada, 0)
-        input("SAlimos del 2º while")
         me.intercambiar(input_entrada, input_entrada[pos_cero[0] - 1][pos_cero[1]])
         me.mover_fila_a_derecha(input_entrada)
         pos_cero = me.buscar(input_entrada, 0)
         me.intercambiar(input_entrada, input_entrada[pos_cero[0] + 1][pos_cero[1]])
         me.mover_fila_a_izquierda(input_entrada)
-        input("Antes del 3º while")
 
         # recolocamos
         pos_cero = me.buscar(input_entrada, 0)
         pos_num = me.buscar(input_entrada, num)
         while pos_num != pos_esperada:
-            input("3º while")
             me.intercambiar(input_entrada, input_entrada[pos_cero[0]-1][pos_cero[1]])
             me.mover_fila_a_derecha(input_entrada)
             pos_cero = me.buscar(input_entrada, 0)
@@ -50,7 +45,6 @@ def ultima_fila(entrada, num):
             me.mover_fila_a_izquierda(input_entrada)
             pos_num = me.buscar(input_entrada, num)
             pos_cero = me.buscar(input_entrada, 0)
-        input("Fin 3º while")
         return True
     else:
         if len(input_entrada[0]) > 3:
