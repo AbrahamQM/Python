@@ -26,7 +26,7 @@ input_entrada = np.array([
 #   [13, 14, 0, 6]
 # ])
 
-# input_entrada = np.array([ # con solución todo revisar con el 12 entra en ultima_fila_derecha
+# input_entrada = np.array([ # con solución
 #      [0, 11, 10, 4],
 #      [2, 3, 8, 7],
 #      [1, 13, 15,9],
