@@ -3,7 +3,6 @@ import metodos as me
 
 
 def ultima_fila(entrada, num):
-    input("En ----------> ultimaFila2.ultima_fila")
     input_entrada = entrada
     res_esperado = me.res(input_entrada)
     sig1, sig2 = 0, 0
